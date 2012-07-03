@@ -105,6 +105,7 @@ public class SecureSMS extends ListActivity {
   private static final int MENU_EXIT_BATCH              = 15;
   private static final int MENU_SELECT_ALL_THREADS      = 16;
   private static final int MENU_CLEAR_SELECTION         = 17;
+  private static final int MENU_IGNORE_LIST				= 18;
 	
   private static final int VIEW_THREAD_ID     = 100;
   private static final int VIEW_CONTACT_ID    = 101;
@@ -200,7 +201,7 @@ public class SecureSMS extends ListActivity {
     importExportMenu.add(0, MENU_IMPORT, Menu.NONE, "Import From SD Card").setIcon(android.R.drawable.ic_menu_revert);
 		
     SubMenu moreMenu = menu.addSubMenu("More").setIcon(android.R.drawable.ic_menu_more);
-
+    moreMenu.add(0,MENU_IGNORE_LIST,Menu.NONE,"Block List");
     if (masterSecret != null)
       moreMenu.add(0, MENU_CLEAR_PASSPHRASE, Menu.NONE, "Clear Passphrase").setIcon(android.R.drawable.ic_menu_close_clear_cancel);
 
@@ -259,6 +260,9 @@ public class SecureSMS extends ListActivity {
       addConversationItems();
       promptForPassphrase();
       //			finish();
+    case MENU_IGNORE_LIST:
+      Intent listIntent = new Intent(this,BlockListActivity.class);
+      startActivity(listIntent);
       return true;
     }
 		

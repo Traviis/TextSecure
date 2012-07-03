@@ -3,4 +3,5 @@
     <string name="app_name">TextSecure</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="add_block">Add number to Block List</string>
 </resources>

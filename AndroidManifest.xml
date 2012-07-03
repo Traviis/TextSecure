@@ -38,7 +38,8 @@
 	<activity android:name=".ContactSelectionActivity" android:label="Contact Selection" android:configChanges="touchscreen|keyboard|keyboardHidden|orientation|screenLayout"></activity>
 	<activity android:name=".ContactSelectionListActivity" android:label="Contact Selection" android:configChanges="touchscreen|keyboard|keyboardHidden|orientation|screenLayout"></activity>
 	<activity android:name=".GroupSelectionListActivity" android:label="Group Selection" android:configChanges="touchscreen|keyboard|keyboardHidden|orientation|screenLayout"></activity>	
-	<activity android:name=".ContactSelectionRecentActivity" android:label="Recent Calls Selection" android:configChanges="touchscreen|keyboard|keyboardHidden|orientation|screenLayout"></activity>	
+	<activity android:name=".ContactSelectionRecentActivity" android:label="Recent Calls Selection" android:configChanges="touchscreen|keyboard|keyboardHidden|orientation|screenLayout"></activity>
+	<activity android:name=".BlockListActivity" android:label="Block List Editor"> </activity>
 
 	
 	<service android:enabled="true" android:name=".service.KeyCachingService"></service>
