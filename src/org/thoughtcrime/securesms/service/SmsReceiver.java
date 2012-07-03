@@ -18,6 +18,7 @@ package org.thoughtcrime.securesms.service;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import org.thoughtcrime.securesms.ApplicationPreferencesActivity;
@@ -37,10 +38,12 @@ import org.thoughtcrime.securesms.sms.MultipartMessageHandler;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.telephony.SmsMessage;
 import android.util.Log;
+
 
 public class SmsReceiver {
 
@@ -151,7 +154,13 @@ public class SmsReceiver {
     SmsMessage[] messages = new SmsMessage[pdus.length];
     //EXPERIMENTAL
     Set<String> blockList = new HashSet<String>();
-    blockList.add("+0000000000");
+    SharedPreferences prefs = context.getSharedPreferences("org.thoughtcrime.securesms.SecureSMS.BLOCKLIST",Context.MODE_PRIVATE); //Hack; need to cache this.
+	  Map<String, String> vals = (Map<String, String>) prefs.getAll();
+      for(Map.Entry<String, String> entry : vals.entrySet())
+      {
+      	blockList.add(entry.getValue());
+      	Log.w("EXPERIMENTAL","Adding to blocklist: " + entry.getValue());
+      }
     ArrayList<SmsMessage> good_mess = new ArrayList<SmsMessage>();
     //END EXPERIMENTAL
     for (int i=0;i<pdus.length;i++)
