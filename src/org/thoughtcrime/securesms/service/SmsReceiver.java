@@ -16,6 +16,10 @@
  */
 package org.thoughtcrime.securesms.service;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+
 import org.thoughtcrime.securesms.ApplicationPreferencesActivity;
 import org.thoughtcrime.securesms.crypto.DecryptingQueue;
 import org.thoughtcrime.securesms.crypto.InvalidKeyException;
@@ -145,16 +149,39 @@ public class SmsReceiver {
   private SmsMessage[] parseMessages(Bundle bundle) {
     Object[] pdus         = (Object[])bundle.get("pdus");
     SmsMessage[] messages = new SmsMessage[pdus.length];
-		
+    //EXPERIMENTAL
+    Set<String> blockList = new HashSet<String>();
+    blockList.add("+0000000000");
+    ArrayList<SmsMessage> good_mess = new ArrayList<SmsMessage>();
+    //END EXPERIMENTAL
     for (int i=0;i<pdus.length;i++)
+    {
       messages[i] = SmsMessage.createFromPdu((byte[])pdus[i]);
-		
-    return messages;
+      if(blockList.contains(messages[i].getDisplayOriginatingAddress()))
+      {
+        Log.e("EXPERIMENTAL",("Blocked message from: " + messages[i].getDisplayOriginatingAddress()));
+      }
+      else
+      {
+    	  good_mess.add(messages[i]);
+      }
+    } 
+    //return messages;
+    Log.e("EXPERIMENTAL","SIZE OF GOOD_MESS: " +good_mess.size());
+    if(good_mess.size() > 0)
+    {
+     SmsMessage[] newmess = new SmsMessage[good_mess.size()];
+     good_mess.toArray(newmess);
+     return newmess;
+    }
+    return null;
   }
 	
-  private void handleReceiveMessage(MasterSecret masterSecret, Intent intent) {
-    Bundle bundle         = intent.getExtras();
+private void handleReceiveMessage(MasterSecret masterSecret, Intent intent) {
+	Bundle bundle         = intent.getExtras();
     SmsMessage[] messages = parseMessages(bundle);
+    if (messages == null)
+      return;
     String message        = assembleMessageFragments(messages);
 		
     if (message != null) {
