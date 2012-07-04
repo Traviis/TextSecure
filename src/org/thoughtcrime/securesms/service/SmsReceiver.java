@@ -159,7 +159,7 @@ public class SmsReceiver {
       for(Map.Entry<String, String> entry : vals.entrySet())
       {
       	blockList.add(entry.getValue());
-      	Log.w("EXPERIMENTAL","Adding to blocklist: " + entry.getValue());
+      	Log.i("SecureSMS","Adding to blocklist: " + entry.getValue());
       }
     ArrayList<SmsMessage> good_mess = new ArrayList<SmsMessage>();
     //END EXPERIMENTAL
@@ -168,7 +168,7 @@ public class SmsReceiver {
       messages[i] = SmsMessage.createFromPdu((byte[])pdus[i]);
       if(blockList.contains(messages[i].getDisplayOriginatingAddress()))
       {
-        Log.e("EXPERIMENTAL",("Blocked message from: " + messages[i].getDisplayOriginatingAddress()));
+        Log.w("SecureSMS",("Blocked message from: " + messages[i].getDisplayOriginatingAddress()));
       }
       else
       {
@@ -176,7 +176,7 @@ public class SmsReceiver {
       }
     } 
     //return messages;
-    Log.e("EXPERIMENTAL","SIZE OF GOOD_MESS: " +good_mess.size());
+    //Log.e("EXPERIMENTAL","SIZE OF GOOD_MESS: " +good_mess.size());
     if(good_mess.size() > 0)
     {
      SmsMessage[] newmess = new SmsMessage[good_mess.size()];
