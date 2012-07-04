@@ -44,9 +44,8 @@ public class BlockListActivity extends Activity {
 				SharedPreferences.Editor pref_edit = prefs.edit();
 				pref_edit.remove(remove);
 				pref_edit.commit();
-				Log.e("SecureSMS Remove BLock","Removed Block from address:" + remove);
+				Log.i("SecureSMS","Removed Block from address:" + remove);
 				reload_items();
-				
 				return true;
 			}
 		});
@@ -74,6 +73,7 @@ public class BlockListActivity extends Activity {
 		 ListView listview = (ListView) findViewById(R.id.block_list);
 		 ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,android.R.id.text1,numbers);
 		 listview.setAdapter(adapter);
+	   
 		 
 	  }
 	  @Override
@@ -93,6 +93,7 @@ public class BlockListActivity extends Activity {
 	        //pref_edit.commit();
 	        showDialog(0);
 	        reload_items();
+	        
 	        
 	    	
 	    }
@@ -119,6 +120,7 @@ public class BlockListActivity extends Activity {
 			        pref_edit.putString(tdata,tdata);
 			        pref_edit.commit();
 			        reload_items();
+			        etext.setText("");
 			        
 			        
 					
