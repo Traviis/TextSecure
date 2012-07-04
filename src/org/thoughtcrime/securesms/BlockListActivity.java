@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 
 public class BlockListActivity extends Activity {
@@ -48,17 +49,22 @@ public class BlockListActivity extends Activity {
 		 
 	  }
 	  @Override
-	  public boolean onOptionsItemSelected(MenuItem item) {
+	  public boolean onOptionsItemSelected(MenuItem item) 
+	  {
 	    super.onOptionsItemSelected(item);
-	    if (item.getItemId() == 5556)
+	    if (item.getItemId() == MENU_BLOCK_BUTTON)
 	    {
-	    	//TEMP
-	    	//JUst add a number to the block list
+	    	//Add an item to the block list
 	    	SharedPreferences prefs = getSharedPreferences("org.thoughtcrime.securesms.SecureSMS.BLOCKLIST",MODE_PRIVATE);
+	    	
 	        SharedPreferences.Editor pref_edit = prefs.edit();
-	        pref_edit.putString("block1", "9999999999");
+	        
+	        EditText etext = (EditText)findViewById(R.id.add_to_list_text);
+	        String new_item = etext.getText().toString();
+	        pref_edit.putString(new_item,new_item);
 	        pref_edit.commit();
 	        reload_items();
+	        
 	    	
 	    }
 	    return true;
