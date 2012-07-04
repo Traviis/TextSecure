@@ -10,14 +10,17 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
+
 
 public class BlockListActivity extends Activity {
 	
@@ -29,6 +32,25 @@ public class BlockListActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.block_list_contents);
 		reload_items();
+		final ListView lv = (ListView)findViewById(R.id.block_list);
+		lv.setLongClickable(true);
+		lv.setOnItemLongClickListener(new OnItemLongClickListener() {
+
+			public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
+					int arg2, long arg3) {
+				Object li = lv.getItemAtPosition(arg2);
+				String remove = li.toString(); //Delete this
+				SharedPreferences prefs = getSharedPreferences("org.thoughtcrime.securesms.SecureSMS.BLOCKLIST",MODE_PRIVATE);
+				SharedPreferences.Editor pref_edit = prefs.edit();
+				pref_edit.remove(remove);
+				pref_edit.commit();
+				Log.e("SecureSMS Remove BLock","Removed Block from address:" + remove);
+				reload_items();
+				
+				return true;
+			}
+		});
+		
 	}
 	  @Override
 	  public boolean onPrepareOptionsMenu(Menu menu)
@@ -102,10 +124,11 @@ public class BlockListActivity extends Activity {
 					
 				}
 			});
-	    	abuilder.setNegativeButton("Cance", new DialogInterface.OnClickListener() {
+	    	abuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
 				
 				public void onClick(DialogInterface dialog, int which) {
 					// TODO Auto-generated method stub
+					reload_items();
 					
 				}
 			});
