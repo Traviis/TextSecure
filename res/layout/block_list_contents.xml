@@ -22,7 +22,7 @@
     <ListView
         android:id="@+id/block_list"
         android:layout_width="fill_parent"
-        android:layout_height="449dp"
+        android:layout_height="match_parent"
         android:fastScrollEnabled="true" />
 
     <ScrollView android:id="@android:id/empty"
@@ -30,15 +30,6 @@
         android:layout_height="fill_parent"
         android:fillViewport="true"
     >
-
-        <EditText
-            android:id="@+id/add_to_list_text"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:ems="10" >
-
-            <requestFocus />
-        </EditText>
         
     </ScrollView>
 </LinearLayout>

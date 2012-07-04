@@ -5,13 +5,19 @@ import java.util.Map;
 
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 public class BlockListActivity extends Activity {
 	
@@ -59,14 +65,53 @@ public class BlockListActivity extends Activity {
 	    	
 	        SharedPreferences.Editor pref_edit = prefs.edit();
 	        
-	        EditText etext = (EditText)findViewById(R.id.add_to_list_text);
-	        String new_item = etext.getText().toString();
-	        pref_edit.putString(new_item,new_item);
-	        pref_edit.commit();
+	        //EditText etext = (EditText)findViewById(R.id.add_to_list_text);
+	        //String new_item = etext.getText().toString();
+	        //pref_edit.putString(new_item,new_item);
+	        //pref_edit.commit();
+	        showDialog(0);
 	        reload_items();
 	        
 	    	
 	    }
 	    return true;
 	  }
+
+	  @Override
+	    protected Dialog onCreateDialog(int id)
+	    {
+	    	AlertDialog.Builder abuilder = new AlertDialog.Builder(this);
+	    	
+	        abuilder.setTitle("Add number to block:");
+	    	LayoutInflater inflater = LayoutInflater.from(this);
+	    	final View view_layout = inflater.inflate(R.layout.alert_dialog_text, null);
+	    	abuilder.setView(view_layout);
+	    	
+	    	abuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+				
+				public void onClick(DialogInterface dialog, int which) {
+					SharedPreferences prefs = getSharedPreferences("org.thoughtcrime.securesms.SecureSMS.BLOCKLIST",MODE_PRIVATE);
+			        SharedPreferences.Editor pref_edit = prefs.edit();
+			        EditText etext = (EditText)view_layout.findViewById(R.id.ALERT_DIALOG_EDIT_TEXT);
+			        String tdata = etext.getText().toString();
+			        pref_edit.putString(tdata,tdata);
+			        pref_edit.commit();
+			        reload_items();
+			        
+			        
+					
+				}
+			});
+	    	abuilder.setNegativeButton("Cance", new DialogInterface.OnClickListener() {
+				
+				public void onClick(DialogInterface dialog, int which) {
+					// TODO Auto-generated method stub
+					
+				}
+			});
+	    	
+	    	
+	    	return abuilder.create();
+	    }
+
 }
